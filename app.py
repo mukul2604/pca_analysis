@@ -2,14 +2,17 @@ from flask import Flask
 from flask import render_template
 from pymongo import MongoClient
 import json
+from bson import json_util
+from bson.json_util import dumps
 
 app = Flask(__name__)
 
 MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
-DBS_NAME = 'traffic_violation'
-COLLECTION_NAME = 'details'
+DBS_NAME = 'tv'
+COLLECTION_NAME = 'tvrecords'
 FIELDS = {'Make': True, 'Model': True}
+
 
 
 @app.route("/")
@@ -18,7 +21,7 @@ def index():
     # return 'Hello'
 
 
-@app.route("/traffic_violation/details")
+@app.route("/tv/details")
 def traffic_violation_details():
     # return "Hdeded"
     connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
@@ -28,9 +31,8 @@ def traffic_violation_details():
     json_recs = []
     for rec in recs:
         json_recs.append(rec)
-        print rec
-        print
-        json_recs = json.dumps(json_recs, default=json.util.default)
+        json_recs.append("\n")
+    json_recs = json.dumps(json_recs, default=json_util.default)
     connection.close()
     return json_recs
 

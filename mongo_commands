@@ -1,3 +1,0 @@
-brew services start mongodb
-mongoimport -d traffic_violation -c collection --type csv --file Traffic_Violations.csv --headerline
-brew services stop mongodb
