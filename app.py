@@ -15,7 +15,7 @@ FIELDS = {'Make': True, 'Model': True}
 @app.route("/")
 def index():
     return render_template("index.html")
-
+    # return 'Hello'
 
 @app.route("/traffic_violation/details")
 def traffic_violation_details():
@@ -34,4 +34,4 @@ def traffic_violation_details():
 
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
