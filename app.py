@@ -17,8 +17,10 @@ def index():
     return render_template("index.html")
     # return 'Hello'
 
+
 @app.route("/traffic_violation/details")
 def traffic_violation_details():
+    # return "Hdeded"
     connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
     collection = connection[DBS_NAME][COLLECTION_NAME]
     recs = collection.find(projection=FIELDS, limit=100000)
