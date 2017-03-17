@@ -4,6 +4,13 @@ from pymongo import MongoClient
 import json
 from bson import json_util
 from bson.json_util import dumps
+import numpy
+from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
+from sklearn.manifold import Isomap
+from sklearn.manifold import MDS
+from sklearn.metrics.pairwise import cosine_similarity
+
 
 app = Flask(__name__)
 
@@ -31,10 +38,12 @@ def traffic_violation_details():
     json_recs = []
     for rec in recs:
         json_recs.append(rec)
-        json_recs.append("\n")
-    json_recs = json.dumps(json_recs, default=json_util.default)
+        # json_recs.append("\n")
+    rnd_sample = numpy.random.choice(json_recs, 10)
+    # rnd_sample = json.dumps(rnd_sample, default=json_util.default)
+    # stratified_sample = stratified_samples(rnd_sample, 10, 1000)
     connection.close()
-    return json_recs
+    return str(rnd_sample)
 
 
 if __name__ == "__main__":
