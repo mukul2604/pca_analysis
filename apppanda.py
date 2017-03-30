@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn import preprocessing
@@ -18,7 +17,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    decimated_data("data/Letter_recognition.csv", False)
+    decimate_data("data/Letter_recognition.csv", False)
     return render_template("index.html")
 
 @app.route("/lr/details")
@@ -51,13 +50,20 @@ def stratified_sampling(kmean_obj, samples):
         x = np.array(x)
         mask = np.random.choice([False, True], len(x), p=[0.80, 0.20])
         strat_samples[idx].append(x[mask])
-        # print len(x[mask])
-    # print strat_samples[0], len(strat_samples)
+        print len(x[mask])
+
+    # flatten the array
+    flattened_arr = []
+    samples = np.array(strat_samples).flatten()
+    for s in samples:
+        for item in s:
+            flattened_arr.append(item)
+
+    strat_samples = np.array(flattened_arr)
     return strat_samples
 
 
-"""Pre-process the data"""
-def decimated_data(datapath, doplot):
+def decimate_data(datapath, doplot):
     df = pd.read_csv(datapath)
     encoder = preprocessing.LabelEncoder()
     """
@@ -86,16 +92,34 @@ def decimated_data(datapath, doplot):
         plt.xlabel('Number of clusters')
         plt.show()
 
-    """from plot elbow is found at k = 4"""
+    """from plot elbow is found at k = 4
+        next do the stratified sampling on those 4 clusters.
+    """
     k_elbow = 4
 
-    stratified_samples = stratified_sampling(kmeans[k_elbow-1], x)
-    return stratified_samples
+    decimated_data = stratified_sampling(kmeans[k_elbow-1], x)
+    return decimated_data
+
+
+def dimension_reduction(datapath):
+    decimated_data = decimate_data(datapath, False)
+    pca = PCA()
+    pca.fit(decimated_data)
+    features = range(pca.n_components_)
+
+    plt.bar(features, pca.explained_variance_)
+    plt.scatter(features, np.cumsum(pca.explained_variance_))
+    plt.xticks(features)
+    plt.ylabel('variance')
+    plt.xlabel('PCA feature')
+    plt.show()
 
 
 def main():
-    decimated_data("data/Letter_recognition.csv", False)
+    dimension_reduction("data/Letter_recognition.csv")
+    # decimate_data("data/Letter_recognition.csv", False)
     # app.run(host='127.0.0.1', port=5000, debug=True)
+
 
 if __name__ == "__main__":
     main()
