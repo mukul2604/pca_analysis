@@ -9,7 +9,6 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn import preprocessing
-import matplotlib.pyplot as plt
 from sklearn.manifold import Isomap
 from sklearn.manifold import MDS
 from sklearn.metrics.pairwise import cosine_similarity
