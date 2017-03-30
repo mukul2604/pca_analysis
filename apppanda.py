@@ -36,6 +36,7 @@ def preprocessdata(datapath, doplot):
     x = np.array(random_sample_encoded)
     x = x.astype(int)
     ks = range(1, 16)
+
     kmeans = [KMeans(n_clusters=i, random_state=0) for i in ks]
     score = [kmeans[i].fit(x).score(x) for i in range(len(kmeans))]
     score = [-score[i] for i in range(len(ks))]
