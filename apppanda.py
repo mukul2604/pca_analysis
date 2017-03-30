@@ -19,18 +19,28 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    preprocessdata("data/Letter_recognition.csv", False)
+    preprocess_data("data/Letter_recognition.csv", False)
     return render_template("index.html")
 
 @app.route("/lr/details")
 def letter_recognition_details():
     return "details"
 
+def stratified_sampling():
+    return 0
 
-def preprocessdata(datapath, doplot):
+
+"""Pre-process the data"""
+def preprocess_data(datapath, doplot):
     df = pd.read_csv(datapath)
     encoder = preprocessing.LabelEncoder()
-    random_sample = df.take(np.random.permutation(len(df))[:1000])
+    """
+        Random Sampling: takes 20% sample of total
+        input sample
+    """
+    pctg = 0.2
+    sample_len = int(len(df) * pctg)
+    random_sample = df.take(np.random.permutation(len(df))[:sample_len])
     random_sample_encoded = random_sample.apply(encoder.fit_transform)
 
     x = np.array(random_sample_encoded)
@@ -49,9 +59,8 @@ def preprocessdata(datapath, doplot):
 
 
 def main():
-    preprocessdata("data/Letter_recognition.csv", True)
+    preprocess_data("data/Letter_recognition.csv", True)
     app.run(host='127.0.0.1', port=5000, debug=True)
-
 
 if __name__ == "__main__":
     main()
