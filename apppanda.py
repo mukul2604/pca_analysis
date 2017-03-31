@@ -124,7 +124,7 @@ def dimension_reduction(datapath, draw_plots):
         plt.suptitle("Scree Plot", fontsize=14, fontweight='bold')
         plt.scatter(components, pca.explained_variance_, c=colors, alpha=0.5)
         plt.plot(components, pca.explained_variance_)
-        line_data = np.array([1 for i in xrange(len(components))])
+        line_data = np.array([1] * len(components))
         plt.plot(components, line_data, 'r--')
         plt.xticks([x for x in components])
         plt.ylabel('Eigen Values')
