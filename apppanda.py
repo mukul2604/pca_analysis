@@ -114,10 +114,13 @@ def decimate_data(datapath, doplot):
     return StandardScaler().fit_transform(decimated_data.astype(float))
 
 
+
+
 def dimension_reduction(datapath, draw_plots):
     decimated_data = decimate_data(datapath, draw_plots)
     pca = PCA()
-    pca.fit(decimated_data)
+    pca_trans = pca.fit_transform(decimated_data)
+    # X = pca.transform(decimated_data)
     components = range(pca.n_components_)
     components = [x+1 for x in components]
 
@@ -133,6 +136,19 @@ def dimension_reduction(datapath, draw_plots):
         plt.xlabel('PCA Components')
         plt.show()
     print pca.explained_variance_
+    plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
+             label='class1')
+    plt.plot(pca_trans[40:140, 0], pca_trans[40:140, 1], '^', markersize=7, color='red', alpha=0.5,
+             label='class2')
+    plt.xlabel('x_values')
+    plt.ylabel('y_values')
+    print pca_trans[0:40, 0]
+    plt.xlim([-4, 4])
+    plt.ylim([-4, 4])
+    plt.legend()
+    plt.title('Transformed samples with class labels from matplotlib.mlab.PCA()')
+
+    plt.show()
 
 
 def main():
