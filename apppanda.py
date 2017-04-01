@@ -68,7 +68,7 @@ def stratified_sampling(kmean_obj, samples):
 def decimate_data(datapath, doplot):
     df = pd.read_csv(datapath)
     df.columns = ["V" + str(i) for i in
-                    range(1, len(df.columns) + 1)]  # rename column names to be similar to R naming convention
+                    range(1, len(df.columns) + 1)]
     df.V1 = df.V1.astype(str)
     X = df.loc[:, "V2":]  # independent variables data
     y = df.V1  # dependent variable data
@@ -78,7 +78,7 @@ def decimate_data(datapath, doplot):
         Initial Random Sampling: takes 20% sample of total
         input sample
     """
-    pctg = 0.2
+    pctg = 0.1
     sample_len = int(len(df) * pctg)
     random_sample = X.take(np.random.permutation(len(df))[:sample_len])
     random_sample_encoded = random_sample.apply(encoder.fit_transform)
@@ -114,13 +114,10 @@ def decimate_data(datapath, doplot):
     return StandardScaler().fit_transform(decimated_data.astype(float))
 
 
-
-
 def dimension_reduction(datapath, draw_plots):
     decimated_data = decimate_data(datapath, draw_plots)
     pca = PCA()
     pca_trans = pca.fit_transform(decimated_data)
-    # X = pca.transform(decimated_data)
     components = range(pca.n_components_)
     components = [x+1 for x in components]
 
@@ -136,23 +133,34 @@ def dimension_reduction(datapath, draw_plots):
         plt.xlabel('PCA Components')
         plt.show()
     print pca.explained_variance_
-    plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
-             label='class1')
-    plt.plot(pca_trans[40:140, 0], pca_trans[40:140, 1], '^', markersize=7, color='red', alpha=0.5,
-             label='class2')
-    plt.xlabel('x_values')
-    plt.ylabel('y_values')
-    print pca_trans[0:40, 0]
-    plt.xlim([-4, 4])
-    plt.ylim([-4, 4])
-    plt.legend()
-    plt.title('Transformed samples with class labels from matplotlib.mlab.PCA()')
 
-    plt.show()
+    if draw_plots:
+        plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
+                 label='class1')
+        plt.plot(pca_trans[40:140, 0], pca_trans[40:140, 1], '^', markersize=7, color='red', alpha=0.5,
+                 label='class2')
+        plt.xlabel('x_values')
+        plt.ylabel('y_values')
+        plt.xlim([-4, 4])
+        plt.ylim([-4, 4])
+        plt.legend()
+        plt.title('PCA 2D scatter')
+        plt.show()
+
+    principal_components = 0
+    for x in pca.explained_variance_:
+        if x > 1:
+            principal_components += 1
+
+    print principal_components
+
+    component_matrix = pca.components_[:, :principal_components]
+    print component_matrix
+    # print pca.components_[0:16, 0], pca.components_[0:16, 1], pca.components_[0:16, 2], pca.components_[0:16, 3]
 
 
 def main():
-    dimension_reduction("data/Letter_recognition.csv", True)
+    dimension_reduction("data/Letter_recognition.csv", False)
     # decimate_data("data/Letter_recognition.csv", False)
     # app.run(host='127.0.0.1', port=5000, debug=True)
 
