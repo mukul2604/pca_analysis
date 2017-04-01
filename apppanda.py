@@ -93,7 +93,7 @@ def decimate_data(datapath, doplot):
     kmeans = [KMeans(n_clusters=i, random_state=0) for i in ks]
     score = [kmeans[i].fit(x).score(x) for i in range(len(kmeans))]
     score = [-score[i] for i in range(len(ks))]
-    print ks, score
+
     if doplot:
         colors = np.random.rand(100)
         plt.suptitle("Elbow Plot", fontsize=14, fontweight='bold')
