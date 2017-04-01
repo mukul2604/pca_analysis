@@ -4,6 +4,7 @@ from flask import render_template
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
@@ -88,7 +89,7 @@ def decimate_data(datapath, doplot):
     """
     x = np.array(random_sample_encoded)
     x = x.astype(int)
-    print len(x[0])
+    # print len(x[0])
     ks = range(1, 16)
     kmeans = [KMeans(n_clusters=i, random_state=0) for i in ks]
     score = [kmeans[i].fit(x).score(x) for i in range(len(kmeans))]
@@ -133,7 +134,6 @@ def dimension_reduction(datapath, draw_plots):
         plt.xlabel('PCA Components')
         plt.show()
 
-
     if draw_plots:
         plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
                  label='class1')
@@ -154,15 +154,16 @@ def dimension_reduction(datapath, draw_plots):
 
     component_matrix = pca.components_[:, :principal_components]
     eigenvalues = pca.explained_variance_[:principal_components]
+    loading_matrix = component_matrix * [math.sqrt(x) for x in eigenvalues]
     print eigenvalues
     print component_matrix
+    print loading_matrix
 
 
 
 def main():
     dimension_reduction("data/Letter_recognition.csv", False)
-    # decimate_data("data/Letter_recognition.csv", False)
-    # app.run(host='127.0.0.1', port=5000, debug=True)
+    #app.run(host='127.0.0.1', port=5000, debug=True)
 
 
 if __name__ == "__main__":
