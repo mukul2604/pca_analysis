@@ -88,14 +88,16 @@ def decimate_data(datapath, doplot):
     """
     x = np.array(random_sample_encoded)
     x = x.astype(int)
-
+    print len(x[0])
     ks = range(1, 16)
     kmeans = [KMeans(n_clusters=i, random_state=0) for i in ks]
     score = [kmeans[i].fit(x).score(x) for i in range(len(kmeans))]
     score = [-score[i] for i in range(len(ks))]
-
+    print ks, score
     if doplot:
+        colors = np.random.rand(100)
         plt.suptitle("Elbow Plot", fontsize=14, fontweight='bold')
+        plt.scatter(ks, score, c=colors, alpha=0.5)
         plt.plot(ks, score)
         plt.ylabel('Objective Function Value')
         plt.xlabel('Number of clusters')
