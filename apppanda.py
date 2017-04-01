@@ -132,7 +132,7 @@ def dimension_reduction(datapath, draw_plots):
         plt.ylabel('Eigen Values')
         plt.xlabel('PCA Components')
         plt.show()
-    print pca.explained_variance_
+
 
     if draw_plots:
         plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
@@ -152,11 +152,11 @@ def dimension_reduction(datapath, draw_plots):
         if x > 1:
             principal_components += 1
 
-    print principal_components
-
     component_matrix = pca.components_[:, :principal_components]
+    eigenvalues = pca.explained_variance_[:principal_components]
+    print eigenvalues
     print component_matrix
-    # print pca.components_[0:16, 0], pca.components_[0:16, 1], pca.components_[0:16, 2], pca.components_[0:16, 3]
+
 
 
 def main():
