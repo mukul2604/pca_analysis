@@ -22,7 +22,7 @@ list_mds = ["euclidean", "correlation"]
 
 @app.route("/")
 def index():
-    decimate_data("data/Letter_recognition.csv", False)
+    dimension_reduction("data/Letter_recognition.csv", False)
     return render_template("index.html")
 
 @app.route("/lr/details")
@@ -209,7 +209,6 @@ def dimension_reduction(datapath, draw_plots):
 
 
 def main():
-    # dimension_reduction("data/Letter_recognition.csv", False)
     app.run(host='127.0.0.1', port=5000, debug=True)
 
 
