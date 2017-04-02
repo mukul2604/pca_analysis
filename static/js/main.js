@@ -15,6 +15,7 @@ function chartTypeFunction() {
     document.getElementById("charttypes").classList.toggle("show");
 }
 
+var svg;
 
 function twoDScatterPlot(filename, id) {
 
@@ -34,31 +35,36 @@ function twoDScatterPlot(filename, id) {
 
 	filename = "./static/data/" + filename;
 
+	if (svg != undefined) {
+        svg.selectAll('*').remove();
+        d3.selectAll('svg').remove();
+    }
+
 	var margin = {top: 100, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-	// setup x
+
 	var xValue = function(d) { return d[0];}, // data -> value
 		xScale = d3.scaleLinear().range([0, width]), // value -> display
 		xMap = function(d) { return xScale(xValue(d));}, // data -> display
 		xAxis = d3.axisBottom(xScale);
 
-	// setup y
+
 	var yValue = function(d) { return d[1];}, // data -> value
 		yScale = d3.scaleLinear().range([height, 0]), // value -> display
 		yMap = function(d) { return yScale(yValue(d));}, // data -> display
 		yAxis = d3.axisLeft(yScale);
 
-	// setup fill color
+
 	var cValue = function(d) { return d[0] + d[1] * 10;},
-		color = d3.scaleOrdinal(d3.schemeCategory20);;
+		color = d3.scaleOrdinal(d3.schemeCategory20);
 
 	// add the graph canvas to the body of the webpage
-	var svg = d3.select("body").append("svg")
+	svg = d3.select("body").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
-	  .append("g")
+	  	.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	// add the tooltip area to the webpage
@@ -151,7 +157,5 @@ function twoDScatterPlot(filename, id) {
 		//   .text(function(d) { return d;})
 	});
 }
-
-
 
 
