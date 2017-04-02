@@ -115,6 +115,13 @@ def decimate_data(datapath, doplot):
     return StandardScaler().fit_transform(decimated_data.astype(float))
 
 
+def squared_sum(arr):
+    sqsum = 0
+    for x in arr:
+        sqsum += pow(x,2)
+    return sqsum
+
+
 def dimension_reduction(datapath, draw_plots):
     decimated_data = decimate_data(datapath, draw_plots)
     pca = PCA()
@@ -156,8 +163,9 @@ def dimension_reduction(datapath, draw_plots):
     eigenvalues = pca.explained_variance_[:principal_components]
     loading_matrix = component_matrix * [math.sqrt(x) for x in eigenvalues]
     print eigenvalues
-    print component_matrix
-    print loading_matrix
+    loading_arr = [squared_sum(x) for x in loading_matrix]
+    print loading_arr
+
 
 
 
