@@ -1,21 +1,41 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-  h1 {color: #ff3366
-  }
-</style>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Data Visualization HomeWork1</title>
+	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="./static/js/d3-tip.js"></script>
+	<link rel="stylesheet" href="./static/css/style.css">
+	<div id="tooltip" class="hidden">
+    	<p><strong></strong></p>
+    	<p><span id="value">50</span></p>
+	</div>
+</head>
 
-<div id="demo"></div>
+<body>
+	<div id ="menu" class = "menu">		
+		<div class="menubar">
+			<button onclick="chartTypeFunction()" class="dropbtn">ChartType</button>
+			  <div id="charttypes" class="dropdown-content">
+				<div id = "bar" onclick =  "chartFunction(id)" class = "selected">Bar</div>
+			   	<div id = "pie" onclick = "chartFunction(id)" class = "dropdown">Pie</div>
+			   	<div id = "force" onclick = "chartFunction(id)" class = "dropdown">Force</div>
+			  </div>
+		</div>
+		<div class="menubar">
+			<button onclick="attrTypeFunction()" class="dropbtn">Attribute</button>
+			<div id="attrtypes" class="dropdown-content">
+			   <div id = "age" onclick =  "dataFunction(id)" class = "selected">Age</div>
+			   <div id = "wage" onclick = "dataFunction(id)" class = "dropdown">Wage</div>
+			   <div id = "exper" onclick = "dataFunction(id)" class = "dropdown">Experience</div>
+			   <div id = "educ" onclick = "dataFunction(id)" class = "dropdown">Education</div>
+			   <div id = "married" onclick = "dataFunction(id)" class = "dropdown">Marital Status</div>
+			</div>
+		</div>
+	</div>
+	<div></div>
+	<script type="text/javascript"  src = "./static/js/main.js">
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
-
-<script>
-  d3.json('pca_vector.json', function(error, data){
-      var demo = d3.select('#demo'),
-      messages = demo.selectAll('messages').data(data).enter();
-      messages.append('h1').html(function(d){ return d;});
-      messages.append('p').html(function(d){return d;});
-  });
-</script>
-<h1>Hello</h1>
+		
+	</script>
+</body>
+</html>

@@ -49,7 +49,8 @@ def stratified_sampling(kmean_obj, samples):
         clustered_data[i].append(samples[0])
         samples = np.delete(samples, 0, axis=0)
 
-    """Random sampling on individual cluster set.
+    """
+       Random sampling on individual cluster set.
        Taking 20% random samples
     """
     strat_samples = []
@@ -143,7 +144,7 @@ def highest_attributes(loading_attr, num):
 
 def dump_data_to_csv(data, filename):
     df = pd.DataFrame(data)
-    df.to_csv("data/" + filename, index=False)
+    df.to_csv("static/data/" + filename, index=False)
 
 
 def dimension_reduction(datapath, draw_plots):
@@ -184,7 +185,8 @@ def dimension_reduction(datapath, draw_plots):
         if x > 1:
             principal_components += 1
 
-    component_matrix = pca.components_[:, :principal_components]
+    component_matrix = pca.components_.T[:, :principal_components]
+
     eigenvalues = pca.explained_variance_[:principal_components]
     loading_matrix = component_matrix * [math.sqrt(x) for x in eigenvalues]
     loading_arr = [squared_sum(x) for x in loading_matrix]
@@ -207,8 +209,8 @@ def dimension_reduction(datapath, draw_plots):
 
 
 def main():
-    dimension_reduction("data/Letter_recognition.csv", False)
-    #app.run(host='127.0.0.1', port=5000, debug=True)
+    # dimension_reduction("data/Letter_recognition.csv", False)
+    app.run(host='127.0.0.1', port=5000, debug=True)
 
 
 if __name__ == "__main__":
