@@ -27,7 +27,7 @@ FIELDS = {'Make': True, 'Model': True}
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("visualize.html")
     # return 'Hello'
 
 

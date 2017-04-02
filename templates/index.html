@@ -1,29 +1,10 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>Data Visualization HomeWork1</title>
-	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-	<link rel="stylesheet" href="./static/css/style.css">
-	<div id="tooltip" class="hidden">
-    	<p><strong></strong></p>
-    	<p><span id="value">50</span></p>
-	</div>
+    <meta charset="UTF-8">
+    <title>Server</title>
 </head>
-
 <body>
-	<div id ="menu" class = "menu">		
-		<div class="menubar">
-			<button onclick="chartTypeFunction()" class="dropbtn">PlotType</button>
-			  <div id="charttypes" class="dropdown-content">
-				<div id = "pca" onclick = "twoDScatterPlot('dimension_reduced_data.csv')" class = "selected">PCA</div>
-			   	<div id = "mds" onclick = "chartFunction(id)" class = "dropdown">MDS</div>
-			   	<div id = "scm" onclick = "chartFunction(id)" class = "dropdown">SCM</div>
-			  </div>
-		</div>
-	</div>
-	<div></div>
-	<script type="text/javascript"  src = "./static/js/main.js">
-
-	</script>
+<a href="visualize"> Visualize Data</a>
 </body>
 </html>

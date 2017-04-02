@@ -13,6 +13,7 @@ from sklearn.cluster import KMeans
 from sklearn import preprocessing
 from sklearn.preprocessing import StandardScaler
 from sklearn import metrics as SK_Metrics
+import os.path
 
 from sklearn.manifold import MDS
 
@@ -20,14 +21,16 @@ app = Flask(__name__)
 
 list_mds = ["euclidean", "correlation"]
 
+
 @app.route("/")
 def index():
     dimension_reduction("data/Letter_recognition.csv", False)
     return render_template("index.html")
 
-@app.route("/lr/details")
+
+@app.route("/visualize")
 def letter_recognition_details():
-    return "details"
+    return render_template("visualize.html")
 
 
 def find_mds(dataframe, type):

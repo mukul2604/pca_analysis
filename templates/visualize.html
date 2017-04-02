@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Data Visualization HomeWork2</title>
+	<script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+	<link rel="stylesheet" href="./static/css/style.css">
+	<div id="tooltip" class="hidden">
+    	<p><strong></strong></p>
+    	<p><span id="value">50</span></p>
+	</div>
+</head>
+
+<body>
+	<div id ="menu" class = "menu">		
+		<div class="menubar">
+			<button onclick="chartTypeFunction()" class="dropbtn">PlotType</button>
+			  <div id="charttypes" class="dropdown-content">
+				<div id = "pca" onclick = "twoDScatterPlot('dimension_reduced_data.csv', id)" class = "selected">PCA</div>
+			   	<div id = "mdscor" onclick = "twoDScatterPlot('correlation.csv', id)" class = "dropdown">MDS_Corr</div>
+			   	<div id = "mdseuc" onclick = "twoDScatterPlot('euclidean.csv', id)" class = "dropdown">MDS_Euclidean</div>
+			   	<div id = "scm" onclick = "twoDScatterPlot('dimension_reduced_data.csv', id)" class = "dropdown">SCM</div>
+			  </div>
+		</div>
+	</div>
+	<div></div>
+	<script type="text/javascript"  src = "./static/js/main.js">
+
+	</script>
+</body>
+</html>
