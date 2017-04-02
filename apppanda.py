@@ -79,7 +79,7 @@ def decimate_data(datapath, doplot):
         Initial Random Sampling: takes 20% sample of total
         input sample
     """
-    pctg = 0.1
+    pctg = 0.20
     sample_len = int(len(df) * pctg)
     random_sample = X.take(np.random.permutation(len(df))[:sample_len])
     random_sample_encoded = random_sample.apply(encoder.fit_transform)
@@ -95,6 +95,7 @@ def decimate_data(datapath, doplot):
     score = [kmeans[i].fit(x).score(x) for i in range(len(kmeans))]
     score = [-score[i] for i in range(len(ks))]
 
+    """Plot for evaluating the Elbow for k-Means clustering"""
     if doplot:
         colors = np.random.rand(100)
         plt.suptitle("Elbow Plot", fontsize=14, fontweight='bold')
@@ -111,15 +112,21 @@ def decimate_data(datapath, doplot):
     k_elbow = 4
 
     decimated_data = stratified_sampling(kmeans[k_elbow-1], x)
-    #  return standardized data
+
     return StandardScaler().fit_transform(decimated_data.astype(float))
 
 
 def squared_sum(arr):
-    sqsum = 0
+    sqr_sum = 0.0
     for x in arr:
-        sqsum += pow(x,2)
-    return sqsum
+        sqr_sum += pow(x, 2)
+    return sqr_sum
+
+
+def highest_attributes(loading_attr):
+    loading_attr = [(i, loading_attr[i]) for i in xrange(len(loading_attr))]
+    loading_attr.sort(key=lambda x: x[1], reverse=True)
+    return [loading_attr[0][0]] + [loading_attr[1][0]] + [loading_attr[2][0]]
 
 
 def dimension_reduction(datapath, draw_plots):
@@ -129,6 +136,7 @@ def dimension_reduction(datapath, draw_plots):
     components = range(pca.n_components_)
     components = [x+1 for x in components]
 
+    """Scree Plot"""
     if draw_plots:
         colors = np.random.rand(100)
         plt.suptitle("Scree Plot", fontsize=14, fontweight='bold')
@@ -162,11 +170,10 @@ def dimension_reduction(datapath, draw_plots):
     component_matrix = pca.components_[:, :principal_components]
     eigenvalues = pca.explained_variance_[:principal_components]
     loading_matrix = component_matrix * [math.sqrt(x) for x in eigenvalues]
-    print eigenvalues
     loading_arr = [squared_sum(x) for x in loading_matrix]
-    print loading_arr
 
-
+    print eigenvalues
+    print highest_attributes(loading_arr)
 
 
 def main():
