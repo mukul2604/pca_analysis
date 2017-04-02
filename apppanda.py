@@ -131,10 +131,14 @@ def squared_sum(arr):
     return sqr_sum
 
 
-def highest_attributes(loading_attr):
+def highest_attributes(loading_attr, num):
     loading_attr = [(i, loading_attr[i]) for i in xrange(len(loading_attr))]
     loading_attr.sort(key=lambda x: x[1], reverse=True)
-    return [loading_attr[0][0]] + [loading_attr[1][0]] + [loading_attr[2][0]]
+
+    attrs = []
+    for x in xrange(num):
+        attrs.append(loading_attr[x][0])
+    return attrs
 
 
 def dump_data_to_csv(data, filename):
@@ -185,11 +189,18 @@ def dimension_reduction(datapath, draw_plots):
     loading_matrix = component_matrix * [math.sqrt(x) for x in eigenvalues]
     loading_arr = [squared_sum(x) for x in loading_matrix]
 
+    highest_attrs = highest_attributes(loading_arr, 3)
+    print highest_attrs
     print eigenvalues
-    print highest_attributes(loading_arr)
 
     dim_reduced_data = pca_trans[:, 0:principal_components]
+    highest_attrs_data = decimated_data[:, highest_attrs]  # standardized data
+    """
+        Dump all the needed data for 
+        D3 visualization
+    """
     dump_data_to_csv(dim_reduced_data, 'dimension_reduced_data.csv')
+    dump_data_to_csv(highest_attrs_data, 'highest_attrs_data.csv')
     for mds_type in list_mds:
         dump_data_to_csv(find_mds(dim_reduced_data, mds_type), mds_type + '.csv')
     print("Contents Dumped")
