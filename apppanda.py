@@ -5,18 +5,20 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import json
+from bson import  json_util
 
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn import preprocessing
 from sklearn.preprocessing import StandardScaler
+from sklearn import metrics as SK_Metrics
 
-from sklearn.manifold import Isomap
 from sklearn.manifold import MDS
-from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 
+list_mds = ["euclidean", "correlation"]
 
 @app.route("/")
 def index():
@@ -26,6 +28,12 @@ def index():
 @app.route("/lr/details")
 def letter_recognition_details():
     return "details"
+
+
+def find_mds(dataframe, type):
+    dis_mat = SK_Metrics.pairwise_distances(dataframe, metric=type)
+    mds = MDS(n_components=2, dissimilarity='precomputed')
+    return pd.DataFrame(mds.fit_transform(dis_mat))
 
 
 def stratified_sampling(kmean_obj, samples):
@@ -129,6 +137,11 @@ def highest_attributes(loading_attr):
     return [loading_attr[0][0]] + [loading_attr[1][0]] + [loading_attr[2][0]]
 
 
+def dump_data_to_csv(data, filename):
+    df = pd.DataFrame(data)
+    df.to_csv("data/" + filename, index=False)
+
+
 def dimension_reduction(datapath, draw_plots):
     decimated_data = decimate_data(datapath, draw_plots)
     pca = PCA()
@@ -149,18 +162,18 @@ def dimension_reduction(datapath, draw_plots):
         plt.xlabel('PCA Components')
         plt.show()
 
-    if draw_plots:
-        plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
-                 label='class1')
-        plt.plot(pca_trans[40:140, 0], pca_trans[40:140, 1], '^', markersize=7, color='red', alpha=0.5,
-                 label='class2')
-        plt.xlabel('x_values')
-        plt.ylabel('y_values')
-        plt.xlim([-4, 4])
-        plt.ylim([-4, 4])
-        plt.legend()
-        plt.title('PCA 2D scatter')
-        plt.show()
+    # if draw_plots:
+    #     plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
+    #              label='class1')
+    #     plt.plot(pca_trans[40:140, 0], pca_trans[40:140, 1], '^', markersize=7, color='red', alpha=0.5,
+    #              label='class2')
+    #     plt.xlabel('x_values')
+    #     plt.ylabel('y_values')
+    #     plt.xlim([-4, 4])
+    #     plt.ylim([-4, 4])
+    #     plt.legend()
+    #     plt.title('PCA 2D scatter')
+    #     plt.show()
 
     principal_components = 0
     for x in pca.explained_variance_:
@@ -174,6 +187,12 @@ def dimension_reduction(datapath, draw_plots):
 
     print eigenvalues
     print highest_attributes(loading_arr)
+
+    dim_reduced_data = pca_trans[:, 0:principal_components]
+    dump_data_to_csv(dim_reduced_data, 'dimension_reduced_data.csv')
+    for mds_type in list_mds:
+        dump_data_to_csv(find_mds(dim_reduced_data, mds_type), mds_type + '.csv')
+    print("Contents Dumped")
 
 
 def main():
