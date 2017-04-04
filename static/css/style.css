@@ -1,5 +1,5 @@
 .menu {
-      float: center;
+      float: left;
       margin: 0;
       position: absolute;
       top: 10%;
@@ -70,78 +70,12 @@
 
 .show {display:block;}
 
-.d3-tip {
-      line-height: 1;
-      padding: 6px;
-      background: #ff686e;
-      color: blue;
-      border-radius: 4px;
-      font-size: 18px;
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
 }
- 
-/* Creates a small triangle extender for the tooltip */
-.d3-tip:after {
-      box-sizing: border-box;
-      display: inline;
-      font-size: 10px;
-      width: 100%;
-      line-height: 1;
-      color: rgba(0, 0, 0, 0.8);
-      content: "\25BC";
-      position: absolute;
-      text-align: center;
-}
- 
-/* Style northward tooltips specifically */
-.d3-tip.n:after {
-      margin: -2px 0 0 0;
-      top: 100%;
-      left: 0;
-}
-
-.pietext {
-  font-family: sans-serif;
-  color: red;
-  font-weight: bold;
-}
-
-#tooltip {
-    position: absolute;
-    width: 20px;
-    height: auto;
-    padding: 10px;
-    background-color: white;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
-    box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.4) pointer-events: none;
-}
-
-#tooltip.hidden {
-    opacity: 0;
-}
-
-#tooltip p {
-    margin: 0;
-    font-family: sans-serif;
-    font-size: 16px;
-    line-height: 20px;
-}
-
-
-.links line {
-  stroke: #888;
-  stroke-opacity: 0.6;
-  stroke-width:1px;
-}
-
-.nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
 
 svg {
   font: 10px sans-serif;
