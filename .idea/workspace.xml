@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e6ba2e66-582c-4630-959e-e59752f590a4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/style.css" afterPath="$PROJECT_DIR$/static/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/main.js" afterPath="$PROJECT_DIR$/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/visualize.html" afterPath="$PROJECT_DIR$/templates/visualize.html" />
     </list>
     <ignored path="pca_analysis.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -826,7 +823,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491284672183</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="js">
+      <created>1491286077264</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1491286077264</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView">
