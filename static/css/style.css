@@ -59,9 +59,9 @@ svg {
   stroke: #ddd;
 }
 
-/*.axis path {*/
-  /*display: none;*/
-/*}*/
+.axis path {
+  display: none;
+}
 
 .cell text {
   font-weight: bold;
