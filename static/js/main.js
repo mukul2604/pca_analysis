@@ -193,7 +193,7 @@ function scatterPlotMatrix(filename, id) {
         if (error) throw error;
 
         var domainByTrait = {},
-            traits = d3.keys(data[0]),
+            traits = d3.keys(data[0]).filter(function(d) { return d !== "2"; }),
             n = traits.length;
 
         traits.forEach(function (trait) {
@@ -252,7 +252,7 @@ function scatterPlotMatrix(filename, id) {
             .attr("y", padding)
             .attr("dy", ".71em")
             .text(function (d) {
-                return d.x;
+                return "Loaded Attribute:" +d.x;
             });
 
         function plot(p) {

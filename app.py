@@ -92,7 +92,7 @@ def decimate_data(datapath, doplot):
         Initial Random Sampling: takes 20% sample of total
         input sample
     """
-    pctg = 0.10
+    pctg = 0.20
     sample_len = int(len(df) * pctg)
     random_sample = X.take(np.random.permutation(len(df))[:sample_len])
     random_sample_encoded = random_sample.apply(encoder.fit_transform)
