@@ -1,37 +1,33 @@
-.menu {
-      float: left;
-      margin: 0;
-      position: absolute;
-      top: 10%;
-      left: 30%;
-      -ms-transform: translate(-10%, -50%);
-      transform: translate(-50%, -50%);
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
 }
 
-.menubar {
-      float:left;
-      margin:30px;
-      display: block;
-      text-align: center;
-      align-content: center;
+li {
+    float: left;
 }
 
-.dropbtn {
-      background-color: #4CAF50;
-      color: white;
-      padding: 20px;
-      font-size: 20px;
-      border: none;
-      cursor: pointer;
-      float: bottom;
-      margin: 0px;
+li {
+    display: inline-block;
+    color: #fefff9;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: floralwhite;
 }
 
-.dropbtn:hover, .dropbtn:focus {
-      background-color: #3e8e41;
+li:hover {
+    background-color: #ff785d;
 }
 
-.dropdown {
+
+/*.dropbtn:hover, .dropbtn:focus {*/
+      /*background-color: #3e8e41;*/
+/*}*/
+
+.notselected {
       /*position: relative;*/
       display: inline-block;
       cursor: pointer;
@@ -41,32 +37,32 @@
 
 .selected {
       border:1px solid #555;
-      background-color: #A6DAA6;
+      background-color: #da4545;
       box-shadow: 3px 3px 5px #777 inset;
       cursor: pointer;
 }
 
-.dropdown-content {
-      display: none;
-      /*position: relative;*/
-      position: absolute;
-      background-color: #f9f9f9;
-      min-width: 180px;
-      overflow: auto;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-      cursor: pointer;
-}
+/*.dropdown-content {*/
+      /*display: none;*/
+      /*!*position: relative;*!*/
+      /*position: absolute;*/
+      /*background-color: #f9f9f9;*/
+      /*min-width: 180px;*/
+      /*overflow: auto;*/
+      /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+      /*z-index: 1;*/
+      /*cursor: pointer;*/
+/*}*/
 
-.dropdown-content div{
-      color: black;
-      padding: 8px 16px;
-      text-decoration: none;
-      display: block;
-      cursor: pointer;
-}
+/*.dropdown-content div{*/
+      /*color: black;*/
+      /*padding: 8px 16px;*/
+      /*text-decoration: none;*/
+      /*display: block;*/
+      /*cursor: pointer;*/
+/*}*/
 
-.dropdown-content div:hover {background-color: #f1f1f1; cursor: pointer;}
+/*.dropdown-content div:hover {background-color: #f1f1f1; cursor: pointer;}*/
 
 .show {display:block;}
 

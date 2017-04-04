@@ -11,12 +11,12 @@ window.onclick = function(event) {
   }
 }
 
-function chartTypeFunction() {
-    document.getElementById("charttypes").classList.toggle("show");
-}
+// function chartTypeFunction() {
+//     document.getElementById("options").classList.toggle("show");
+// }
 
 function markSelection(id) {
-    var elements = document.getElementById("charttypes").children;
+    var elements = document.getElementById("options").children;
 	var i;
 
 	for (i=0; i < elements.length; i++) {
@@ -26,7 +26,7 @@ function markSelection(id) {
 			d3.select(selectElem).attr("class", "selected");
 		} else {
 			var selectElem = document.getElementById(element.id);
-			d3.select(selectElem).attr("class", "dropdown");
+			d3.select(selectElem).attr("class", "notselected");
 		}
 	}
 }
