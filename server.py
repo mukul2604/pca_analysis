@@ -1,21 +1,15 @@
 from flask import Flask
 from flask import render_template
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import math
-import json
-from bson import  json_util
-
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn import preprocessing
 from sklearn.preprocessing import StandardScaler
 from sklearn import metrics as SK_Metrics
-import os.path
-
 from sklearn.manifold import MDS
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import math
 
 app = Flask(__name__)
 
@@ -61,12 +55,13 @@ def stratified_sampling(kmean_obj, samples):
     for i in range(kmean_obj.n_clusters):
         strat_samples.append([])
 
+    print "Stratified sampling:"
     for x in clustered_data:
         idx = clustered_data.index(x)
         x = np.array(x)
         mask = np.random.choice([False, True], len(x), p=[0.80, 0.20])
         strat_samples[idx].append(x[mask])
-        print len(x[mask])
+        print "Samples in cluseter_id " + str(idx) + ": " + str(len(x[mask]))
 
     # flatten the array
     flattened_arr = []
@@ -86,16 +81,18 @@ def decimate_data(datapath, doplot):
     df.V1 = df.V1.astype(str)
     X = df.loc[:, "V2":]  # independent variables data
     y = df.V1  # dependent variable data
-
+    print "Initial number of samples: " + str(len(df))
     encoder = preprocessing.LabelEncoder()
     """
         Initial Random Sampling: takes 20% sample of total
         input sample
     """
     pctg = 0.20
+    print "Random sampling rate: " + str(pctg*100) + "%"
     sample_len = int(len(df) * pctg)
     random_sample = X.take(np.random.permutation(len(df))[:sample_len])
     random_sample_encoded = random_sample.apply(encoder.fit_transform)
+    print "Number of random samples: " + str(len(random_sample))
 
     """
         K-means clustering
@@ -155,6 +152,7 @@ def dump_data_to_csv(data, filename):
 
 def dimension_reduction(datapath, draw_plots):
     decimated_data, cluster_ids = decimate_data(datapath, draw_plots)
+    print "Dimension reduction start..."
     pca = PCA()
     pca_trans = pca.fit_transform(decimated_data)
     components = range(pca.n_components_)
@@ -194,31 +192,32 @@ def dimension_reduction(datapath, draw_plots):
     component_matrix = pca.components_.T[:, :principal_components]
 
     eigenvalues = pca.explained_variance_[:principal_components]
+    print "EigenValues greater than or equal to 1: " + str(eigenvalues)
     loading_matrix = component_matrix * [math.sqrt(x) for x in eigenvalues]
     loading_arr = [squared_sum(x) for x in loading_matrix]
 
     highest_attrs = highest_attributes(loading_arr, 3)
-    print highest_attrs
-    print eigenvalues
+    print "Highest Loaded Attributes: " + str(highest_attrs)
 
     transformed_data = pca_trans[:, 0:principal_components]
     dim_reduced_data = np.append(transformed_data, cluster_ids, 1)
     highest_attrs_data = np.append(decimated_data[:, highest_attrs], cluster_ids, 1)  # standardized data
+    print "Dimension reduction ends"
     """
         Dump all the needed data for 
         D3 visualization
     """
+    print "Dumping the data..."
     dump_data_to_csv(dim_reduced_data, 'dimension_reduced_data.csv')
     dump_data_to_csv(highest_attrs_data, 'highest_attrs_data.csv')
     for mds_type in list_mds:
         mds_data = find_mds(transformed_data, mds_type)
         dump_data_to_csv(np.append(mds_data, cluster_ids, 1), mds_type + '.csv')
-    print("Contents Dumped")
+    print"Dumped data"
 
 
 def main():
     app.run(host='127.0.0.1', port=5000, debug=True)
-    # dimension_reduction("data/Letter_recognition.csv", False)
 
 if __name__ == "__main__":
     main()
