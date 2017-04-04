@@ -210,10 +210,10 @@ function scatterPlotMatrix(filename, id) {
             .append("g")
             .attr("transform", "translate(" + padding + "," + padding / 2 + ")");
 
-        svg.selectAll(".x.axis")
+        svg.selectAll(".x.scaxis")
             .data(traits)
             .enter().append("g")
-            .attr("class", "x axis")
+            .attr("class", "x scaxis")
             .attr("transform", function (d, i) {
                 return "translate(" + (n - i - 1) * size + ",0)";
             })
@@ -222,10 +222,10 @@ function scatterPlotMatrix(filename, id) {
                 d3.select(this).call(xAxis);
             });
 
-        svg.selectAll(".y.axis")
+        svg.selectAll(".y.scaxis")
             .data(traits)
             .enter().append("g")
-            .attr("class", "y axis")
+            .attr("class", "y scaxis")
             .attr("transform", function (d, i) {
                 return "translate(0," + i * size + ")";
             })

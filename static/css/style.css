@@ -50,16 +50,16 @@ svg {
   padding: 10px;
 }
 
-.axis,
+.scaxis,
 .frame {
   shape-rendering: crispEdges;
 }
 
-.axis line {
+.scaxis line {
   stroke: #ddd;
 }
 
-.axis path {
+.scaxis path {
   display: none;
 }
 
