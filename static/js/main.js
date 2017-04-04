@@ -61,7 +61,7 @@ function twoDScatterPlot(filename, id) {
 		yAxis = d3.axisLeft(yScale);
 
 
-	var cValue = function(d) { return d[Object.keys(d).length - 1];},
+	var cValue = function(d) { return parseInt(d[Object.keys(d).length - 1]);},
 		color = d3.scaleOrdinal(d3.schemeCategory20);
 
 
@@ -85,7 +85,6 @@ function twoDScatterPlot(filename, id) {
 	  data.forEach(function(d) {
 		d[0] = +d[0];
 		d[1] = +d[1];
-	//    console.log(d);
 	  });
 
 	  // don't want dots overlapping axis, so add in buffer to data domain
@@ -102,7 +101,7 @@ function twoDScatterPlot(filename, id) {
 		  .attr("x", width)
 		  .attr("y", -6)
 		  .style("text-anchor", "end")
-		  .text("Calories");
+		  .text("Component 1");
 
 	  // y-axis
 	  svg.append("g")
@@ -114,7 +113,7 @@ function twoDScatterPlot(filename, id) {
 		  .attr("y", 6)
 		  .attr("dy", ".71em")
 		  .style("text-anchor", "end")
-		  .text("Protein (g)");
+		  .text("Component 2");
 
 	  // draw dots
 	  svg.selectAll(".dot")
@@ -129,7 +128,7 @@ function twoDScatterPlot(filename, id) {
 			  tooltip.transition()
 				   .duration(200)
 				   .style("opacity", .9);
-			  tooltip.html("Cluster_id:" + d[Object.keys(d).length-1] + "<br/> (" + xValue(d)
+			  tooltip.html("Cluster_id:" + parseInt(d[Object.keys(d).length-1]) + "<br/> (" + xValue(d)
 				+ ", " + yValue(d) + ")")
 				   .style("left", (d3.event.pageX + 5) + "px")
 				   .style("top", (d3.event.pageY - 28) + "px");
