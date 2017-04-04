@@ -49,7 +49,8 @@ def stratified_sampling(kmean_obj, samples):
     # segregate the input random sample into their respective
     # clusters
     for i in cluster_numbers:
-        clustered_data[i].append(samples[0])
+        sample = np.append(samples[0], i)
+        clustered_data[i].append(sample)
         samples = np.delete(samples, 0, axis=0)
 
     """
@@ -101,7 +102,7 @@ def decimate_data(datapath, doplot):
     """
     x = np.array(random_sample_encoded)
     x = x.astype(int)
-    # print len(x[0])
+
     ks = range(1, 16)
     kmeans = [KMeans(n_clusters=i, random_state=0) for i in ks]
     score = [kmeans[i].fit(x).score(x) for i in range(len(kmeans))]
@@ -124,8 +125,10 @@ def decimate_data(datapath, doplot):
     k_elbow = 4
 
     decimated_data = stratified_sampling(kmeans[k_elbow-1], x)
-
-    return StandardScaler().fit_transform(decimated_data.astype(float))
+    standard_data = decimated_data[:, :-1]
+    standard_data = StandardScaler().fit_transform(standard_data.astype(float))
+    cluster_id_col = decimated_data[:, -1:]
+    return standard_data, cluster_id_col
 
 
 def squared_sum(arr):
@@ -151,7 +154,7 @@ def dump_data_to_csv(data, filename):
 
 
 def dimension_reduction(datapath, draw_plots):
-    decimated_data = decimate_data(datapath, draw_plots)
+    decimated_data, cluster_ids = decimate_data(datapath, draw_plots)
     pca = PCA()
     pca_trans = pca.fit_transform(decimated_data)
     components = range(pca.n_components_)
@@ -198,8 +201,9 @@ def dimension_reduction(datapath, draw_plots):
     print highest_attrs
     print eigenvalues
 
-    dim_reduced_data = pca_trans[:, 0:principal_components]
-    highest_attrs_data = decimated_data[:, highest_attrs]  # standardized data
+    transformed_data = pca_trans[:, 0:principal_components]
+    dim_reduced_data = np.append(transformed_data, cluster_ids, 1)
+    highest_attrs_data = np.append(decimated_data[:, highest_attrs], cluster_ids, 1)  # standardized data
     """
         Dump all the needed data for 
         D3 visualization
@@ -207,13 +211,14 @@ def dimension_reduction(datapath, draw_plots):
     dump_data_to_csv(dim_reduced_data, 'dimension_reduced_data.csv')
     dump_data_to_csv(highest_attrs_data, 'highest_attrs_data.csv')
     for mds_type in list_mds:
-        dump_data_to_csv(find_mds(dim_reduced_data, mds_type), mds_type + '.csv')
+        mds_data = find_mds(transformed_data, mds_type)
+        dump_data_to_csv(np.append(mds_data, cluster_ids, 1), mds_type + '.csv')
     print("Contents Dumped")
 
 
 def main():
     app.run(host='127.0.0.1', port=5000, debug=True)
-
+    # dimension_reduction("data/Letter_recognition.csv", False)
 
 if __name__ == "__main__":
     main()

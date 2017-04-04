@@ -61,7 +61,7 @@ function twoDScatterPlot(filename, id) {
 		yAxis = d3.axisLeft(yScale);
 
 
-	var cValue = function(d) { return d[0] + d[1] * 10;},
+	var cValue = function(d) { return d[Object.keys(d).length - 1];},
 		color = d3.scaleOrdinal(d3.schemeCategory20);
 
 
@@ -129,7 +129,7 @@ function twoDScatterPlot(filename, id) {
 			  tooltip.transition()
 				   .duration(200)
 				   .style("opacity", .9);
-			  tooltip.html(d["Cereal Name"] + "<br/> (" + xValue(d)
+			  tooltip.html("Cluster_id:" + d[Object.keys(d).length-1] + "<br/> (" + xValue(d)
 				+ ", " + yValue(d) + ")")
 				   .style("left", (d3.event.pageX + 5) + "px")
 				   .style("top", (d3.event.pageY - 28) + "px");
@@ -167,16 +167,14 @@ function twoDScatterPlot(filename, id) {
 function scatterPlotMatrix(filename, id) {
     markSelection(id);
 
-	filename = "./static/data/" + filename;
+    filename = "./static/data/" + filename;
 
-	if (svg != undefined) {
+    if (svg != undefined) {
         svg.selectAll('*').remove();
         d3.selectAll('svg').remove();
     }
-
     var width = 960,
-        size = 250,
-        top_margin = 10,
+        size = 230,
         padding = 20;
 
     var x = d3.scaleLinear()
@@ -187,23 +185,15 @@ function scatterPlotMatrix(filename, id) {
 
     var xAxis = d3.axisBottom(x);
 
-    var yAxis = d3.axisLeft(x);
-
+    var yAxis = d3.axisLeft(y);
+      
     var color = d3.scaleOrdinal(d3.schemeCategory20);
-
-    // svg = d3.select("body").append("svg")
-		// .attr("width", width + margin.left + margin.right)
-		// .attr("height", height + margin.top + margin.bottom)
-	 //  	.append("g")
-		// .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     d3.csv(filename, function (error, data) {
         if (error) throw error;
 
         var domainByTrait = {},
-            traits = d3.keys(data[0]).filter(function (d) {
-                return d !== "species";
-            }),
+            traits = d3.keys(data[0]),
             n = traits.length;
 
         traits.forEach(function (trait) {
@@ -215,11 +205,11 @@ function scatterPlotMatrix(filename, id) {
         xAxis.tickSize(size * n);
         yAxis.tickSize(-size * n);
 
-        svg = d3.select("body").append("svg")
+        var svg = d3.select("body").append("svg")
             .attr("width", size * n + padding)
             .attr("height", size * n + padding)
             .append("g")
-            .attr("transform", "translate(" + padding + "," + top_margin + ")");
+            .attr("transform", "translate(" + padding + "," + padding / 2 + ")");
 
         svg.selectAll(".x.axis")
             .data(traits)
@@ -289,15 +279,15 @@ function scatterPlotMatrix(filename, id) {
                 })
                 .attr("r", 4)
                 .style("fill", function (d) {
-                    return color(d.species);
+                    return color(d[0]);
                 });
         }
     });
 }
-
 function cross(a, b) {
   var c = [], n = a.length, m = b.length, i, j;
   for (i = -1; ++i < n;) for (j = -1; ++j < m;) c.push({x: a[i], i: i, y: b[j], j: j});
   return c;
 }
+
 
