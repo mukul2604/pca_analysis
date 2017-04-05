@@ -159,50 +159,6 @@ def dimension_reduction(datapath, draw_plots):
         plt.xlabel('PCA Components')
         plt.show()
 
-    # if draw_plots:
-    #     plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
-    #              label='class1')
-    #     plt.plot(pca_trans[40:140, 0], pca_trans[40:140, 1], '^', markersize=7, color='red', alpha=0.5,
-    #              label='class2')
-    #     plt.xlabel('x_values')
-    #     plt.ylabel('y_values')
-    #     plt.xlim([-4, 4])
-    #     plt.ylim([-4, 4])
-    #     plt.legend()
-    #     plt.title('PCA 2D scatter')
-    #     plt.show()
-
-    # principal_components = 0
-    # for x in pca.explained_variance_:
-    #     if x > 1:
-    #         principal_components += 1
-    #
-    # component_matrix = pca.components_.T[:, :principal_components]
-    #
-    # eigenvalues = pca.explained_variance_[:principal_components]
-    # print "EigenValues greater than or equal to 1: " + str(eigenvalues)
-    # loading_matrix = component_matrix * [math.sqrt(x) for x in eigenvalues]
-    # loading_arr = [squared_sum(x) for x in loading_matrix]
-    #
-    # highest_attrs = highest_attributes(loading_arr, 3)
-    # print "Highest Loaded Attributes: " + str(highest_attrs)
-    #
-    # transformed_data = pca_trans[:, 0:principal_components]
-    # dim_reduced_data = np.append(transformed_data, cluster_ids, 1)
-    # highest_attrs_data = np.append(decimated_data[:, highest_attrs], cluster_ids, 1)  # standardized data
-    # print "Dimension reduction ends"
-    # """
-    #     Dump all the needed data for
-    #     D3 visualization
-    # """
-    # print "Dumping the data..."
-    # dump_data_to_csv(dim_reduced_data, 'dimension_reduced_data.csv')
-    # dump_data_to_csv(highest_attrs_data, 'highest_attrs_data.csv')
-    # for mds_type in list_mds:
-    #     mds_data = find_mds(transformed_data, mds_type)
-    #     dump_data_to_csv(np.append(mds_data, cluster_ids, 1), mds_type + '.csv')
-    # print"Dumped data"
-
 
 def main():
     dimension_reduction("data/Letter_recognition.csv", True)

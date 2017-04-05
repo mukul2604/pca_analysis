@@ -62,7 +62,7 @@ function twoDScatterPlot(filename, id) {
 
 
 	var cValue = function(d) { return parseInt(d[Object.keys(d).length - 1]);},
-		color = d3.scaleOrdinal(d3.schemeCategory20);
+		color = d3.scaleOrdinal(d3.schemeCategory10);
 
 
 
@@ -186,7 +186,7 @@ function scatterPlotMatrix(filename, id) {
 
     var yAxis = d3.axisLeft(y);
       
-    var color = d3.scaleOrdinal(d3.schemeCategory20);
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
 
     d3.csv(filename, function (error, data) {
         if (error) throw error;
