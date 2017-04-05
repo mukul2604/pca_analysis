@@ -171,19 +171,6 @@ def dimension_reduction(datapath, draw_plots):
         plt.xlabel('PCA Components')
         plt.show()
 
-    # if draw_plots:
-    #     plt.plot(pca_trans[0:40, 0], pca_trans[0:40, 1], 'o', markersize=7, color='blue', alpha=0.5,
-    #              label='class1')
-    #     plt.plot(pca_trans[40:140, 0], pca_trans[40:140, 1], '^', markersize=7, color='red', alpha=0.5,
-    #              label='class2')
-    #     plt.xlabel('x_values')
-    #     plt.ylabel('y_values')
-    #     plt.xlim([-4, 4])
-    #     plt.ylim([-4, 4])
-    #     plt.legend()
-    #     plt.title('PCA 2D scatter')
-    #     plt.show()
-
     principal_components = 0
     for x in pca.explained_variance_:
         if x > 1:
@@ -217,7 +204,8 @@ def dimension_reduction(datapath, draw_plots):
 
 
 def main():
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    # dimension_reduction("data/Letter_recognition.csv", False)
+    app.run(host='localhost', port=2017, debug=True)
 
 if __name__ == "__main__":
     main()
