@@ -40,11 +40,18 @@ li:hover {
 
 .tooltip {
   position: absolute;
-  width: 200px;
-  height: 28px;
+  width: 120px;
+  height: 20px;
+  background-color: #333333;
+  color: #ff9540;
   pointer-events: none;
+  align-content: center;
 }
 
+.tooltip text {
+    align-content: center;
+    align-items: center;
+}
 svg {
   font: 10px sans-serif;
   padding: 10px;

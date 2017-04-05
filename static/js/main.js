@@ -128,8 +128,8 @@ function twoDScatterPlot(filename, id) {
 			  tooltip.transition()
 				   .duration(200)
 				   .style("opacity", .9);
-			  tooltip.html("Cluster_id:" + parseInt(d[Object.keys(d).length-1]) + "<br/> (" + xValue(d)
-				+ ", " + yValue(d) + ")")
+			  tooltip.html("  cid:" + parseInt(d[Object.keys(d).length-1]) +  ", ("+ xValue(d).toFixed(2)
+				+ ", " + yValue(d).toFixed(2) + ")")
 				   .style("left", (d3.event.pageX + 5) + "px")
 				   .style("top", (d3.event.pageY - 28) + "px");
 		  })
