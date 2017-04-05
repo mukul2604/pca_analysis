@@ -172,9 +172,9 @@ function scatterPlotMatrix(filename, id) {
         svg.selectAll('*').remove();
         d3.selectAll('svg').remove();
     }
-    var width = 960,
-        size = 230,
-        padding = 20;
+    var width = 900,
+        size = 200,
+        padding = 1;
 
     var x = d3.scaleLinear()
         .range([padding / 2, size - padding / 2]);
@@ -276,7 +276,7 @@ function scatterPlotMatrix(filename, id) {
                 .attr("cy", function (d) {
                     return y(d[p.y]);
                 })
-                .attr("r", 4)
+                .attr("r", 3)
                 .style("fill", function (d) {
                     return color(d[Object.keys(d).length - 1]);
                 });
