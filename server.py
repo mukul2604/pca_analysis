@@ -18,7 +18,6 @@ list_mds = ["euclidean", "correlation"]
 
 @app.route("/")
 def index():
-    dimension_reduction("data/Letter_recognition.csv", False)
     return render_template("index.html")
 
 
@@ -204,8 +203,10 @@ def dimension_reduction(datapath, draw_plots):
 
 
 def main():
-    # dimension_reduction("data/Letter_recognition.csv", False)
-    app.run(host='localhost', port=2017, debug=True)
+    print "Pre-processing the data..."
+    dimension_reduction("data/Letter_recognition.csv", False)
+    print "Starting server.."
+    app.run(host='localhost', port=2017, debug=True, use_reloader=False)
 
 if __name__ == "__main__":
     main()
